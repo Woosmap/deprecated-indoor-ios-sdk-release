@@ -36,5 +36,6 @@
 #import <InTripper/blackInfoWindow.h>
 #import <InTripper/IntripperLanguage.h>
 #import <InTripper/AnimatingTrainMarker.h>
+#import <InTripper/TrackingAreaMarker.h>
 //#endif
 

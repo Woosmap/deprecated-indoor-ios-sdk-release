@@ -11,6 +11,7 @@
 #import "IndoorMapObject.h"
 #import "PathFormatter.h"
 #import "TrackingMarker.h"
+#import "TrackingAreaMarker.h"
 #import "AnimatingTrainMarker.h"
 /**
  *  Navigation Modes
@@ -559,4 +560,17 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
     -(int)floorIndexInBuildingArray:(NSArray *)buldingarray;
 
 -(void)AddTrain:(AnimatingTrainMarker *)train;
+
+
+/**
+*  Adds a Area on the map.
+*
+*  @param tracking An instance of the class <<TrackingAreaMarker>>
+*/
+-(void)addTrackingArea:(TrackingAreaMarker *)tracking;
+
+/**
+ *  Removes the Area drawn
+ */
+-(void)RemoveAllTrackingArea;
 @end
