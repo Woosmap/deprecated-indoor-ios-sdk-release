@@ -1,9 +1,9 @@
 //
 //  Preferences.h
-//  SanginfoMap
+//  Intripper
 //
 //  Created by Sang.Mac.04 on 09/10/13.
-//  Copyright (c) 2013 Sanginfo. All rights reserved.
+//  Copyright (c) 2013 InTripper. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

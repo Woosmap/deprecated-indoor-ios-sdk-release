@@ -1,9 +1,8 @@
 //
 //  CacheManager.h
-//  alcatraz
 //
 //  Created by Sang.Mac.04 on 22/07/14.
-//  Copyright (c) 2014 Sanginfo. All rights reserved.
+//  Copyright (c) 2014 InTripper. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

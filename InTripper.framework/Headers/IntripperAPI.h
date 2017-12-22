@@ -3,7 +3,7 @@
 //  Intripper
 //
 //  Created by Sanginfo on 07/02/16.
-//  Copyright © 2016 Sanginfo. All rights reserved.
+//  Copyright © 2017-18 InTripper. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

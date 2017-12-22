@@ -3,7 +3,7 @@
 //  Intripper
 //
 //  Created by apple on 08/10/17.
-//  Copyright © 2017 Sanginfo. All rights reserved.
+//  Copyright © 2017 InTripper. All rights reserved.
 //
 
 #import <GoogleMaps/GoogleMaps.h>
