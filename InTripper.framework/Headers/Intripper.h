@@ -6,16 +6,6 @@
 //  Copyright © 2016 Sanginfo. All rights reserved.
 //
 
-//#ifdef DEBUG
-//#import "IntripperMap.h"
-//#import "IntripperMapService.h"
-//#import "IndoorMapObject.h"
-//#import "PathFormatter.h"
-//#import "MapSearch.h"
-//#import "THLabel.h"
-//#import "TrackingMarker.h"
-//#else
-
 #import <InTripper/IntripperMap.h>
 #import <InTripper/IntripperAPI.h>
 #import <InTripper/IntripperMapService.h>
@@ -37,5 +27,5 @@
 #import <InTripper/IntripperLanguage.h>
 #import <InTripper/AnimatingTrainMarker.h>
 #import <InTripper/TrackingAreaMarker.h>
-//#endif
+
 
