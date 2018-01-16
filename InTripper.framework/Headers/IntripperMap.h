@@ -54,9 +54,9 @@ typedef enum {
 /**
  *  Description
  *
- *  @param formatter <#formatter description#>
+ *  @param formatter descriptioncd
  *
- *  @return <#return value description#>
+ *  @return return value description
  */
 typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 /**
@@ -192,18 +192,18 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 - (void) intripper:(id )mapView didTapInfoWindowOfMarker:(NSDictionary *)markerDetail;
 
 /**
- *  <#Description#>
+ *  Description
  *
- *  @param mapView   <#mapView description#>
- *  @param zoomlevel <#zoomlevel description#>
+ *  @param mapView   mapView description
+ *  @param zoomlevel zoomlevel description
  */
 -(void) intripper:(id)mapView mapAtIdlePostion:(float)zoomlevel;
 
 /**
-*  <#Description#>
+*  Description
 *
-*  @param mapView   <#mapView description#>
-*  @param zoomlevel <#zoomlevel description#>
+*  @param mapView   mapView description
+*  @param zoomlevel zoomlevel description
 */
 -(void) intripper:(id)mapView mapSlide:(float)zoomlevel;
 
@@ -214,14 +214,25 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 -(void) intripper:(id)mapView buildingViewChange:(NSDictionary *)buildinginfo;
 
 /**
- *  <#Description#>
+ *  Description
  *
- *  @param latitude  <#latitude description#>
- *  @param longitude <#longitude description#>
+ *  @param latitude  latitude description
+ *  @param longitude longitude description
  */
 -(void)SetBlueDotOnLongPress:(double)latitude longitude:(double)longitude;
 
 -(BOOL) intripper:(id)mapView showTextWithIcon:(UIImage **)iconImage andText:(NSString **)areaName;
+
+-(UIView *)intripper:(id)mapview customizePOIPin:(UIImage *)imgPin;
+
+-(UIView *)intripper:(id)mapview customizeStartMarker:(UIImage *)imgPin;
+-(UIView *)intripper:(id)mapview customizeEndMarker:(UIImage *)imgPin;
+-(UIView *)intripper:(id)mapview customizeLevelChangedMarker:(UIImage *)imgPin movingUp:(BOOL)up;
+
+-(CGPoint)intripper:(id)mapview LevelChangedMarkerAnchor:(CGPoint)refAnchor;
+
+-(UIView *)intripper:(id)mapview customizeBuildingChangedMarker:(UIImage *)imgPin building:(NSString *)buildingref;
+-(CGPoint)intripper:(id)mapview BuildingChangedMarkerAnchor:(CGPoint)refAnchor;
 @end
 /**
  *  This is the main class of InTripper SDK for IOS and is the entry point for all the methods related to maps.

@@ -35,8 +35,8 @@
 /**
  *  Upload image of Profile
  *
- *  @param img
- *  @param refno
+ *  @param img image to be uploaded
+ *  @param refno imge refrence number <UserID>
  */
 -(void)uploadProfileImage:(UIImage *)img andRefNo:(NSString *)refno;
 -(void)NewBuddyRequest:(NSString *)buddyCode user:(NSInteger)myid result:(void (^)(NSArray *posts, NSError *error))response;

@@ -19,7 +19,7 @@ struct CGIndoorMapPoint {
 typedef struct CGIndoorMapPoint CGIndoorMapPoint;
 
 CGIndoorMapPoint CGMakeMapPoint(float xlat,float ylng, int f);
-CGIndoorMapPoint CGMakeMapPointEmpty();
+CGIndoorMapPoint CGMakeMapPointEmpty(void);
 bool CGIndoorMapPointIsEmpty(CGIndoorMapPoint map);
 bool CGIndoorMapPointIsEqual(CGIndoorMapPoint map1,CGIndoorMapPoint map2);
 
