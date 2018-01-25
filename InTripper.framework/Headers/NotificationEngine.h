@@ -28,4 +28,5 @@
 //-(void)ActivateBeaconNotification;
 //-(void)DeActivateBeaconNotification;
 -(void)registerUser;
+-(void)registerMoreAttribute:(NSDictionary *)extraFields;
 @end

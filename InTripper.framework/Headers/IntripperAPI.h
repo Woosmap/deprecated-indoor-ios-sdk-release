@@ -56,5 +56,6 @@
 -(void)getCuisineCategory:(void (^)(NSArray *posts, NSError *error))response;
 -(void)getEntertaintmentCategory:(void (^)(NSArray *posts, NSError *error))response;
 -(void)getAmenitiesCategory:(void (^)(NSArray *posts, NSError *error))response;
+-(void)registerMoreAttribute:(NSDictionary *)extraFields withUser:(NSInteger) userref result:(void (^)(NSArray *posts, NSError *error))response;
 
 @end

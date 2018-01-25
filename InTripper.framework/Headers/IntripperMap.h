@@ -223,6 +223,9 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 
 -(BOOL) intripper:(id)mapView showTextWithIcon:(UIImage **)iconImage andText:(NSString **)areaName;
 
+-(UIView *) intripper:(id)mapView customizeAreaName:(NSString *)imageurl andText:(NSString *)areaName;
+
+
 -(UIView *)intripper:(id)mapview customizePOIPin:(UIImage *)imgPin;
 
 -(UIView *)intripper:(id)mapview customizeStartMarker:(UIImage *)imgPin;

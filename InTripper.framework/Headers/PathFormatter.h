@@ -18,6 +18,12 @@
  *  Sets the color of the path.
  */
 @property (nonatomic,retain) UIColor *pathColor;
+
+/**
+ *  Sets the color of the path which already covered.
+ */
+@property (nonatomic,retain) UIColor *pathPastColor;
+
 /**
  *  Sets the thickness of the path.
  */
