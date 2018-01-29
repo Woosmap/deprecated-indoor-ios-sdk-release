@@ -587,4 +587,6 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  Removes the Area drawn
  */
 -(void)RemoveAllTrackingArea;
+
+-(NSArray *)mapAreaBounds;
 @end
