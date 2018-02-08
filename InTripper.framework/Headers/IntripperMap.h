@@ -574,7 +574,14 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  Useful when user wants to scoll through a set of instructions.
  */
 -(void)PreviousStepInstruction;
+
 //Re-Route New Path
+/**
+ Reroutes the path using new source location
+
+ @param coordinate new starting point coordinates
+ @param level new starting point level
+ */
 -(void)ReRoute:(CLLocationCoordinate2D)coordinate floor:(int)level;
 
 /**
@@ -627,10 +634,11 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 -(NSString *) LocationFloorRef:(int) floor;
 
 /**
- External Floor refrence id
+ *  External Floor refrence id
 
- @param floorref Floor number
- @return refrence number
+ *  @param floorref Floor number
+ 
+ *  @return refrence number
  */
 -(int) ExternalFloorForFloorRef:(NSString *) floorref;
 /**
@@ -647,9 +655,9 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 -(NSString *)IAAPIapiSecret;
 
 /**
- *  Gets the API secret for the indoor positioning services.
+ *  To get extra map setting information.
  *
- *  @return The API secret for the indoor positioning services.
+ *  @return cictionary of extra map settings.
  */
 -(NSDictionary *)mapSettings;
 
@@ -685,21 +693,21 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @return NSArray of stores.
  */
 -(NSArray *)AllStoreInformation;
-/**
- *  Center map at given location
- *
- *  @param mp        location point
- *  @param zoomlevel map zoom level
- */
 
+/**
+ Center map at given location
+
+ @param mp location point
+ @param zoomlevel map zoom level
+ */
 -(void)centerMapWithLocation:(CGIndoorMapPoint)mp andZoom:(float)zoomlevel;
+
 /**
  *  Return true if user location visible on map
  *
  *  @return True/False
  */
 -(BOOL)isBlueDotVisibleOnMap;
-
 
 /**
  Return true if street view loaded
@@ -709,7 +717,9 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 -(BOOL)isStreetViewLoaded;
 
 /**
- *  Loads street view.
+ Loads street view
+
+ @param location The reference location for loading street view
  */
 - (void)loadStreetView:(CLLocationCoordinate2D)location;
 /**
@@ -735,13 +745,12 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 
 
 /**
- Get Floor index in Array for current floor
+ Get floor index in Array for current floor
 
  @param buldingarray List of level array
  @return return index value in list
  */
 -(int)floorIndexInBuildingArray:(NSArray *)buldingarray;
-
 
 /**
  Animating train
@@ -749,7 +758,6 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @param train test
  */
 -(void)AddTrain:(AnimatingTrainMarker *)train;
-
 
 /**
  *  Adds a Area on the map.
@@ -759,7 +767,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 -(void)addTrackingArea:(TrackingAreaMarker *)tracking;
 
 /**
- *  Removes the Area drawn
+ *  Removes the drawn area
  */
 -(void)RemoveAllTrackingArea;
 
