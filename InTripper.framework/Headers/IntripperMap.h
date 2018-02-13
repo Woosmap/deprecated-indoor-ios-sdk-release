@@ -336,7 +336,16 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @param refAnchor SDK marker point
  @return Changed marker point
  */
--(CGPoint)intripper:(id)mapview LevelChangedMarkerAnchor:(CGPoint)refAnchor;
+-(CGPoint)intripper:(id)mapview LevelChangedMarkerAnchor:(CGPoint)refAnchor __deprecated_msg("use intripper: levelChangedMarkerAnchor: instead.");
+
+/**
+ Anchor point where marker render default(.0,.5)
+ 
+ @param mapview The mapview where level marker render
+ @param refAnchor SDK marker point
+ @return Changed marker point
+ */
+-(CGPoint)intripper:(id)mapview levelChangedMarkerAnchor:(CGPoint)refAnchor;
 
 /**
  Customize building anchor
@@ -355,7 +364,15 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @param refAnchor anchore point set by sdk
  @return new Anchor point
  */
--(CGPoint)intripper:(id)mapview BuildingChangedMarkerAnchor:(CGPoint)refAnchor;
+-(CGPoint)intripper:(id)mapview BuildingChangedMarkerAnchor:(CGPoint)refAnchor __deprecated_msg("use intripper: buildingChangedMarkerAnchor: instead.");
+/**
+ Customize building anchor
+ 
+ @param mapview The mapview where level marker render
+ @param refAnchor anchore point set by sdk
+ @return new Anchor point
+ */
+-(CGPoint)intripper:(id)mapview buildingChangedMarkerAnchor:(CGPoint)refAnchor;
 @end
 /**
  *  This is the main class of InTripper SDK for IOS and is the entry point for all the methods related to maps.
@@ -405,7 +422,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 /**
  *  Highlight store on navagation mode default=NO
  */
-@property (nonatomic,readwrite) BOOL showStoreDuringNavigation;
+@property (nonatomic,readwrite) BOOL showAreaDuringNavigation;
 /**
  *  Gets the current Navigation mode. default=NavigationMode_None
  */
@@ -479,7 +496,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @param latitude  Latitude
  *  @param longitude Longitude
  */
--(void)setBlueDot:(double)latitude longitude:(double)longitude;
+-(void)setBlueDot:(double)latitude longitude:(double)longitude __deprecated_msg("use setBlueDot:onFloor instead");
 
 /**
  *  Sets the user's current position (blue dot) on the map.
@@ -495,7 +512,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @param location The location of the user's current position.
  *  @param level    The floor level of the user's current position.
  */
--(void)setFalseBlueDot:(CLLocation *)location onFloor:(int)level;
+-(void)setFalseBlueDot:(CLLocation *)location onFloor:(int)level __deprecated_msg("This method use only for debug perpose.");
 
 
 /**
@@ -504,7 +521,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @param location The location of the user's current position.
  *  @param level    The floor level of the user's current position.
  */
--(void)setDummyBlueDot:(CLLocation *)location onFloor:(int)level;
+-(void)setDummyBlueDot:(CLLocation *)location onFloor:(int)level __deprecated_msg("This method use only for debug perpose.");
 
 /**
  *  Gets the user's current location.
@@ -561,19 +578,19 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *
  *  @param instructionIndex The index for getting the instruction.
  */
--(void)StepToInstruction:(NSInteger)instructionIndex;
+-(void)stepToInstruction:(NSInteger)instructionIndex;
 /**
  *  Sets the corresponding instruction for the next step.
  The user's navigation mode should be NavigationMode_TurnByTurn.
  Useful when user wants to scoll through a set of instructions.
  */
--(void)NextStepInstruction;
+-(void)nextStepInstruction;
 /**
  *  Sets the corresponding instruction for navigation for the previous step.
  The user's navigation mode should be NavigationMode_TurnByTurn.
  Useful when user wants to scoll through a set of instructions.
  */
--(void)PreviousStepInstruction;
+-(void)previousStepInstruction;
 
 //Re-Route New Path
 /**
@@ -582,7 +599,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @param coordinate new starting point coordinates
  @param level new starting point level
  */
--(void)ReRoute:(CLLocationCoordinate2D)coordinate floor:(int)level;
+-(void)reRoute:(CLLocationCoordinate2D)coordinate floor:(int)level;
 
 /**
  *  Suppress reroute event For 5 seconds
@@ -606,7 +623,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @param coordinate The location of the area/section to be found.
  *  @param level      The level at which the area/secton is located.
  */
--(void)FindAreaOnMap:(CLLocationCoordinate2D)coordinate floor:(int)level;
+-(void)findAreaOnMap:(CLLocationCoordinate2D)coordinate floor:(int)level;
 //Mark Poi on map
 /**
  *  Finds an area (typically used to find a POI) and displays a corresponding marker on the mapview.
@@ -615,13 +632,13 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @param level      The level at which the area (POI) is located.
  *  @param text       The title of the area (POI) that will be dsplayed on the marker window.
  */
--(void)FindAreaOnMap:(CLLocationCoordinate2D)coordinate floor:(int)level title:(NSString *)text;
+-(void)findAreaOnMap:(CLLocationCoordinate2D)coordinate floor:(int)level title:(NSString *)text;
 /**
  *  Finds an area/section on the map and displays a corresponding marker on the mapview.
  *
  *  @param storeid The unique ID of the area/section to be found.
  */
--(void)FindAreaOnMap:(NSString *)storeid;
+-(void)findAreaOnMap:(NSString *)storeid;
 
 //Indoor Positioning Services
 /**
@@ -631,7 +648,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *
  *  @return Returns the a unique floor plan ID.
  */
--(NSString *) LocationFloorRef:(int) floor;
+-(NSString *) locationFloorRef:(int) floor;
 
 /**
  *  External Floor refrence id
@@ -640,7 +657,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  
  *  @return refrence number
  */
--(int) ExternalFloorForFloorRef:(NSString *) floorref;
+-(int) externalFloorForFloorRef:(NSString *) floorref;
 /**
  *  Gets the API key for the indoor positioning services.
  *
@@ -666,7 +683,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *
  *  @return NSArray of floor plan IDs
  */
--(NSArray *)LocationFloorRefID;
+-(NSArray *)locationFloorRefID;
 
 //Tracking
 /**
@@ -676,23 +693,23 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  */
 -(void)addTrackingMarker:(TrackingMarker *)tracking;
 /**
- *  Updates the marker position of the buddy at specific intervals.
+ *  Updates the POI marker position .
  *
- *  @param coordinate The current position of the buddy.
- *  @param level      The level at which the buddy is present.
+ *  @param coordinate The current position of the POI.
+ *  @param level      The level at which the POI is present.
  */
--(void)UpdateTrackingMarker:(CLLocationCoordinate2D)coordinate floor:(int)level;
+-(void)updateTrackingMarker:(CLLocationCoordinate2D)coordinate floor:(int)level;
 /**
- *  Removes the buddy marker
+ *  Removes the POI marker
  */
--(void)RemoveTrackingMarker;
+-(void)removeTrackingMarker;
 //Map Information
 /**
- *  Gets the store data available for a particular venue.
+ *  Gets the Area data available for a particular venue.
  *
- *  @return NSArray of stores.
+ *  @return NSArray of area.
  */
--(NSArray *)AllStoreInformation;
+-(NSArray *)allAreaInformation;
 
 /**
  Center map at given location
@@ -757,7 +774,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 
  @param train test
  */
--(void)AddTrain:(AnimatingTrainMarker *)train;
+-(void)addTrain:(AnimatingTrainMarker *)train;
 
 /**
  *  Adds a Area on the map.
@@ -769,7 +786,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 /**
  *  Removes the drawn area
  */
--(void)RemoveAllTrackingArea;
+-(void)removeAllTrackingArea;
 
 /**
  Area coordinate for map bound
@@ -777,4 +794,17 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @return return coordinate list of map borders
  */
 -(NSArray *)mapAreaBounds;
+
+
+/**
+ Add Custome POI on map
+
+ @param tracking POI Info
+ */
+-(void)addCustomePOI:(TrackingMarker *)tracking;
+
+/**
+ Clear Map : Remove Custome POI
+ */
+-(void)removeAllCustomePOI;
 @end
