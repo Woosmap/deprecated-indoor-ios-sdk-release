@@ -80,7 +80,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @param sender  the mapview that passed
  @param isLoaded true/false always return true
  */
--(void)intripper:(id)sender loaded:(BOOL)isLoaded;
+-(void)intripper:(id)sender onLoaded:(BOOL)isLoaded;
 
 /**
  *  Called after a long-press gesture at a particular coordinate.
@@ -161,14 +161,14 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @param mapView The mapview that caused the event to trigger.
  *  @param level   The level of the floor change.
  */
--(void)intripper:(id)mapView floorChange:(int)level;
+-(void)intripper:(id)mapView onFloorChange:(int)level;
 /**
  *  Called after a double tap gesture is detected on floor selector.
  *
  *  @param mapView The map view where the double tap was detected
  *  @param level The level selected by the user.
  */
--(void)intripper:(id)mapView floorTapRepeat:(int)level;
+-(void)intripper:(id)mapView onFloorTapRepeat:(int)level;
 /**
  *  Floor list of map
  *
@@ -183,14 +183,14 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @param mapView mapView The mapview where the user location is found.
  *  @param region  region A dictionary of the elevator/escalator found nearby the user's location.
  */
--(void)intripper:(id)mapView enterFloorChangeRegion:(NSDictionary *)region;
+-(void)intripper:(id)mapView onEnterFloorChangeRegion:(NSDictionary *)region;
 /**
  *  Called when the user moves out of the geo-fenced region for elevators/escalators.
  *
  *  @param mapView mapView The mapview where the user location is found.
  *  @param region  region A dictionary of the elevator/escalator from where the user has made an exit.
  */
--(void)intripper:(id)mapView exitFloorChangeRegion:(NSDictionary *)region;
+-(void)intripper:(id)mapView onExitFloorChangeRegion:(NSDictionary *)region;
 
 
 /**
@@ -225,7 +225,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @param mapView   mapView description
  *  @param zoomlevel zoomlevel description
  */
--(void) intripper:(id)mapView mapAtIdlePostion:(float)zoomlevel;
+-(void) intripper:(id)mapView onMapAtIdlePostion:(float)zoomlevel;
 
 /**
  *  Description
@@ -233,7 +233,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @param mapView   mapView description
  *  @param zoomlevel zoomlevel description
  */
--(void) intripper:(id)mapView mapSlide:(float)zoomlevel;
+-(void) intripper:(id)mapView onMapSlide:(float)zoomlevel;
 
 
 
@@ -254,7 +254,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @param mapView The mapview where build changed
  @param buildinginfo more information about building
  */
--(void) intripper:(id)mapView buildingViewChange:(NSDictionary *)buildinginfo;
+-(void) intripper:(id)mapView onBuildingViewChange:(NSDictionary *)buildinginfo;
 
 /**
  Showing labels on map
@@ -550,7 +550,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @param startPoint Source Coordinates
  *  @param endPoint   Destination Coordinates
  */
--(void)FindRoute:(CGIndoorMapPoint)startPoint destination:(CGIndoorMapPoint)endPoint;
+-(void)findRoute:(CGIndoorMapPoint)startPoint destination:(CGIndoorMapPoint)endPoint;
 /*
  *@depricated
  *use FindRoute
@@ -563,7 +563,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @param endPoint       Destination Coordinates
  *  @param cutAtEnterance BOOL flag
  */
--(void)FindRoute:(CGIndoorMapPoint)startPoint destination:(CGIndoorMapPoint)endPoint uptoDoor:(BOOL)cutAtEnterance;
+-(void)findRoute:(CGIndoorMapPoint)startPoint destination:(CGIndoorMapPoint)endPoint uptoDoor:(BOOL)cutAtEnterance;
 /**
  *  Ends the navigation when user's navigation mode is NavigationMode_TurnByTurn
  */
