@@ -1,10 +1,10 @@
-//
-//  IntripperMap.h
-//  Intripper
-//
-//  Created by Intripper on 20/01/16.
-//  Copyright © 2017-18 InTripper. All rights reserved.
-//
+/*!
+*  @header IntripperMap.h
+*  Intripper
+*
+*  Created by Intripper on 20/01/16.
+*  Copyright © 2017-18 InTripper. All rights reserved.
+*/
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
@@ -12,11 +12,11 @@
 #import "PathFormatter.h"
 #import "TrackingMarker.h"
 #import "TrackingAreaMarker.h"
-#import "AnimatingTrainMarker.h"
+
 /**
  *  Navigation Modes
  */
-typedef enum {
+typedef NS_ENUM(NSInteger,NavigationMode) {
     /**
      *  Non-Navigation mode
      */
@@ -31,24 +31,27 @@ typedef enum {
     NavigationMode_TurnByTurn,
     
     
-} NavigationMode;
+};
 
-typedef enum {
+/**
+ Type Elevator, Escalator,Staircase
+ */
+typedef NS_ENUM(NSInteger,FloorConntectedBy) {
     /**
-     *  Non-Navigation mode
+     *  Elevator
      */
     FloorConntectedBy_Elevator,
     /**
-     *  Navigation Preview mode
+     *  Escalator
      */
     FloorConntectedBy_Escalator,
     /**
-     * Navigation with turn by turn instructions mode.
+     * Staircase
      */
     FloorConntectedBy_Staircase,
     
     
-} FloorConntectedBy;
+};
 
 
 /**
@@ -70,7 +73,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  * Called after map loaded
  *
  * @param sender The mapview that was pressed
- *
+ * @deprecated use intripper: loaded: instead.
  */
 -(void)IndoorMapLoaded:(id)sender __deprecated_msg("use intripper: loaded: instead.");
 
@@ -335,6 +338,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @param mapview The mapview where level marker render
  @param refAnchor SDK marker point
  @return Changed marker point
+ @deprecated use intripper: levelChangedMarkerAnchor: instead.
  */
 -(CGPoint)intripper:(id)mapview LevelChangedMarkerAnchor:(CGPoint)refAnchor __deprecated_msg("use intripper: levelChangedMarkerAnchor: instead.");
 
@@ -363,6 +367,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @param mapview The mapview where level marker render
  @param refAnchor anchore point set by sdk
  @return new Anchor point
+ @deprecated use intripper: buildingChangedMarkerAnchor: instead.
  */
 -(CGPoint)intripper:(id)mapview BuildingChangedMarkerAnchor:(CGPoint)refAnchor __deprecated_msg("use intripper: buildingChangedMarkerAnchor: instead.");
 /**
@@ -373,11 +378,25 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @return new Anchor point
  */
 -(CGPoint)intripper:(id)mapview buildingChangedMarkerAnchor:(CGPoint)refAnchor;
+
+/**
+ Called when poi searched on map
+
+ @param mapView The mapview where poi marker render
+ @param poiinfo Detail of poi
+ */
+
+/**
+ Called when poi searched on map
+
+ @param mapView The mapview where poi marker render
+ @param poiinfo Detail of POI
+ @param error return error when poi not found else nil
+ */
+-(void)intripper:(id)mapView onPOIFound:(NSDictionary *)poiinfo onFailed:(NSError *)error;
 @end
 /**
  *  This is the main class of InTripper SDK for IOS and is the entry point for all the methods related to maps.
- *  The map should be instantiated via the convenience constructor [[IntripperMap alloc] init]
- 
  */
 @interface IntripperMap : UIViewController{
 }
@@ -398,22 +417,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  * Active Building Ref set from APP
  */
 @property (nonatomic,retain) NSString *ActiveBuildingID;
-/**
- *  Controls whether the map uses custom tiles (Default renderer for Custom Tiles is MapBox)
- *  or Google Maps.
- */
-@property (nonatomic,readwrite) BOOL useMapboxMap __deprecated_msg("invalid");
 
-
-/**
- Enable Debug mode to get user location from GPS default=NO
- */
-@property (nonatomic,readwrite) BOOL useDebugMode __deprecated_msg("invalid");
-
-/**
- *  extended coordinate system use default=NO
- */
-@property (nonatomic,readwrite) BOOL useVirtualCoordinate __deprecated_msg("invalid");
 /**
  *  Controls whether user can abandon navigation during navigation mode.
  */
@@ -493,35 +497,12 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 /**
  *  Sets the user's current position (blue dot) on the map.
  *
- *  @param latitude  Latitude
- *  @param longitude Longitude
- */
--(void)setBlueDot:(double)latitude longitude:(double)longitude __deprecated_msg("use setBlueDot:onFloor instead");
-
-/**
- *  Sets the user's current position (blue dot) on the map.
- *
  *  @param location The location of the user's current position.
  *  @param level    The floor level of the user's current position.
  */
 -(void)setBlueDot:(CLLocation *)location onFloor:(int)level;
 
-/**
- *  Sets the user's current position (Gray dot) on the map.
- *
- *  @param location The location of the user's current position.
- *  @param level    The floor level of the user's current position.
- */
--(void)setFalseBlueDot:(CLLocation *)location onFloor:(int)level __deprecated_msg("This method use only for debug perpose.");
 
-
-/**
- *  Sets the user's current position (Gray dot) on the map.
- *
- *  @param location The location of the user's current position.
- *  @param level    The floor level of the user's current position.
- */
--(void)setDummyBlueDot:(CLLocation *)location onFloor:(int)level __deprecated_msg("This method use only for debug perpose.");
 
 /**
  *  Gets the user's current location.
@@ -551,11 +532,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @param endPoint   Destination Coordinates
  */
 -(void)findRoute:(CGIndoorMapPoint)startPoint destination:(CGIndoorMapPoint)endPoint;
-/*
- *@depricated
- *use FindRoute
- */
--(void)FindRoutev1:(CGIndoorMapPoint)startPoint destination:(CGIndoorMapPoint)endPoint uptoDoor:(BOOL)cutAtEnterance __attribute__((deprecated));
+
 /**
  *  Finds the path from the source to the destination. It has an option to end the path at the entrance or inside the store. This choice is useful when a path needs to be ended at the entrance (in case of stores) or inside (in case of a POI located inside the store)
  *
@@ -637,8 +614,16 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  Finds an area/section on the map and displays a corresponding marker on the mapview.
  *
  *  @param storeid The unique ID of the area/section to be found.
+ *  @deprecated use findPOIOnMap: instead.
  */
--(void)findAreaOnMap:(NSString *)storeid;
+-(void)findAreaOnMap:(NSString *)storeid __deprecated_msg("use findPOIOnMap: instead");
+
+/**
+ *  Finds an area/section on the map and displays a corresponding marker on the mapview.
+ *
+ *  @param poiid The unique ID of the area/section to be found.
+ */
+-(void)findPOIOnMap:(NSString *)poiid;
 
 //Indoor Positioning Services
 /**
@@ -657,19 +642,15 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  
  *  @return refrence number
  */
+
+/**
+ External Floor refrence id
+
+ @param floorref Floor number
+ @return refrence number
+ */
 -(int) externalFloorForFloorRef:(NSString *) floorref;
-/**
- *  Gets the API key for the indoor positioning services.
- *
- *  @return The API key for the indoor positioning services.
- */
--(NSString *)IAAPIapikey;
-/**
- *  Gets the API secret for the indoor positioning services.
- *
- *  @return The API secret for the indoor positioning services.
- */
--(NSString *)IAAPIapiSecret;
+
 
 /**
  *  To get extra map setting information.
@@ -769,12 +750,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  */
 -(int)floorIndexInBuildingArray:(NSArray *)buldingarray;
 
-/**
- Animating train
 
- @param train test
- */
--(void)addTrain:(AnimatingTrainMarker *)train;
 
 /**
  *  Adds a Area on the map.
