@@ -338,9 +338,9 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @param mapview The mapview where level marker render
  @param refAnchor SDK marker point
  @return Changed marker point
- @deprecated use intripper: levelChangedMarkerAnchor: instead.
+ @deprecated use intripper: onLevelChangedMarkerAnchor: instead.
  */
--(CGPoint)intripper:(id)mapview LevelChangedMarkerAnchor:(CGPoint)refAnchor __deprecated_msg("use intripper: levelChangedMarkerAnchor: instead.");
+-(CGPoint)intripper:(id)mapview LevelChangedMarkerAnchor:(CGPoint)refAnchor __deprecated_msg("use intripper: onLevelChangedMarkerAnchor: instead.");
 
 /**
  Anchor point where marker render default(.0,.5)
@@ -349,7 +349,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @param refAnchor SDK marker point
  @return Changed marker point
  */
--(CGPoint)intripper:(id)mapview levelChangedMarkerAnchor:(CGPoint)refAnchor;
+-(CGPoint)intripper:(id)mapview onLevelChangedMarkerAnchor:(CGPoint)refAnchor;
 
 /**
  Customize building anchor
