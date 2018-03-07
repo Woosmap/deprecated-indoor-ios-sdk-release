@@ -12,7 +12,7 @@
 #import "PathFormatter.h"
 #import "TrackingMarker.h"
 #import "TrackingAreaMarker.h"
-
+#import <GoogleMaps/GoogleMaps.h>
 /**
  *  Navigation Modes
  */
@@ -394,6 +394,24 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @param error return error when poi not found else nil
  */
 -(void)intripper:(id)mapView onPOIFound:(NSDictionary *)poiinfo onFailed:(NSError *)error;
+
+
+/**
+ * Called before the camera on the map changes, either due to a gesture, animation (e.g., by a user
+ * tapping on the "My Location" button) or by being updated explicitly via the camera or a
+ * zero-length animation on layer.
+ *
+ * @param gesture If YES, this is occuring due to a user gesture.
+ */
+- (void)intripper:(GMSMapView *)mapView willMove:(BOOL)gesture;
+
+/**
+ * Called repeatedly during any animations or gestures on the map (or once, if the camera is
+ * explicitly set). This may not be called for all intermediate camera positions. It is always
+ * called for the final position of an animation or gesture.
+ */
+- (void)intripper:(GMSMapView *)mapView didChangeCameraPosition:(GMSCameraPosition *)position;
+
 @end
 /**
  *  This is the main class of InTripper SDK for IOS and is the entry point for all the methods related to maps.
@@ -783,4 +801,22 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  Clear Map : Remove Custome POI
  */
 -(void)removeAllCustomePOI;
+
+/**
+ Show POI Marker on Map
+
+ @param coordinate Lat/Lng
+ @param level Level of map loaded
+ @param Title Title on POI
+ */
+-(void)showPOIMarker:(CLLocationCoordinate2D)coordinate floor:(int)level title:(NSString *)Title;
+
+
+/**
+ Show POI On Map
+
+ @param poiinfo Detail of POI
+ @param pinView Image of POI
+ */
+-(void)showPOIMarker:(NSDictionary *)poiinfo view:(UIView *)pinView;
 @end
