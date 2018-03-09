@@ -719,6 +719,13 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 -(void)centerMapWithLocation:(CGIndoorMapPoint)mp andZoom:(float)zoomlevel;
 
 /**
+ Center map at given location
+
+ @param mp location point
+ */
+-(void)centerMapWithLocation:(CGIndoorMapPoint)mp;
+
+/**
  *  Return true if user location visible on map
  *
  *  @return True/False
