@@ -484,6 +484,16 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 @property (nonatomic,readwrite) BOOL rotateMapWithNorthHeading;
 
 /**
+ * Font Use on map
+ */
+@property (nonatomic,retain) NSString *fontFamily;
+
+/**
+ * HighlightStrokeWidth for lable render on map
+ */
+@property (nonatomic,readwrite) float labelHighlightStrokeWidth;
+
+/**
  *  Sets the navigation mode.
  *
  *  @param mode Navigation mode type (NavigationMode_None,NavigationMode_Preview,NavigationMode_TurnByTurn)
@@ -537,6 +547,18 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @return Returns a dictionary of the tapped area.
  */
 -(NSDictionary *) getTappedAreaInfo :(CLLocation *)location onFloor:(int)level;
+
+/**
+ *  Returns the information of the tapped area on the map.
+ *
+ *  @param location Location that was tapped.
+ *  @param level    floor level.
+ *  @param shouldSkip    Skip non business area.
+ *
+ *  @return Returns a dictionary of the tapped area.
+ */
+-(NSDictionary *) getTappedAreaInfo :(CLLocation *)location onFloor:(int)level skipNonBusinessArea:(BOOL) shouldSkip;
+
 /**
  *  Centers the blue dot in the map view.
  */
@@ -826,4 +848,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @param pinView Image of POI
  */
 -(void)showPOIMarker:(NSDictionary *)poiinfo view:(UIView *)pinView;
+
+-(NSString *)IAAPIapikey;
+-(NSString *)IAAPIapiSecret;
 @end
