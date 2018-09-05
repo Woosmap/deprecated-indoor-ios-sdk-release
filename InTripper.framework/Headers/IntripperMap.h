@@ -54,6 +54,10 @@ typedef NS_ENUM(NSInteger,MapViewMode) {
  */
 typedef NS_ENUM(NSInteger,FloorConntectedBy) {
     /**
+     *  Unknown mode
+     */
+    FloorConntectedBy_Unknown,
+    /**
      *  Elevator
      */
     FloorConntectedBy_Elevator,
@@ -468,6 +472,12 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  Highlight store on navagation mode default=NO
  */
 @property (nonatomic,readwrite) BOOL showAreaDuringNavigation;
+
+/**
+ *  Sets Style to map (add same name of JSON file in resource bundle and set only filename here without extension).
+ */
+@property (nonatomic,retain) NSString *mapStyle;
+
 /**
  *  Gets the current Navigation mode. default=NavigationMode_None
  */
