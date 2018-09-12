@@ -345,6 +345,17 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 
  @param mapview The mapview where level marker render
  @param imgPin image from SDK
+ @param floorChangeMode floor change Using mode
+ @param up Moving up direction
+ @return View to display on map
+ */
+-(UIView *)intripper:(id)mapview customizeLevelChangedMarker:(UIImage *)imgPin mode:(FloorConntectedBy)floorChangeMode movingUp:(BOOL)up;
+
+/**
+ Customize level changed marker
+
+ @param mapview The mapview where level marker render
+ @param imgPin image from SDK
  @param up Moving up direction
  @param nearStart  atstart point
  @return View to display on map
