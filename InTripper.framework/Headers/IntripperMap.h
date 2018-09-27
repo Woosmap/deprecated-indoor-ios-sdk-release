@@ -726,13 +726,6 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  */
 -(NSString *) locationFloorRef:(int) floor;
 
-/**
- *  External Floor refrence id
-
- *  @param floorref Floor number
- 
- *  @return refrence number
- */
 
 /**
  External Floor refrence id
