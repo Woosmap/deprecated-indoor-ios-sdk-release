@@ -75,6 +75,24 @@ typedef NS_ENUM(NSInteger,FloorConntectedBy) {
 
 
 /**
+ *  Destination Direction
+ */
+typedef NS_ENUM(NSInteger,DestinationDirection) {
+    /**
+     *  Non-Navigation mode
+     */
+    Destination_Left,
+    /**
+     *  Navigation Preview mode
+     */
+    Destination_Right,
+    /**
+     * Navigation with turn by turn instructions mode.
+     */
+     Destination_Front,
+};
+
+/**
  *  Description
  *
  *  @param formatter descriptioncd
@@ -222,7 +240,17 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @param mapView The mapview
  *  @param navigationState YES if user is arriving near the destination.
  */
--(void)intripper:(id)mapView endNavigation:(BOOL)navigationState;
+-(void)intripper:(id)mapView endNavigation:(BOOL)navigationState ;
+
+/**
+ *  Called when the user arrives at the destination in navigation mode.
+ *
+ *  @param mapView The mapview
+ *  @param navigationState YES if user is arriving near the destination.
+*  @param destinationDirection direction of destination.
+ */
+-(void)intripper:(id)mapView endNavigation:(BOOL)navigationState destinationDirection:(DestinationDirection) atDirection;
+
 
 /**
  *  Called when a marker is about to become selected and provides an optional
@@ -893,7 +921,14 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  */
 -(void)showPOIMarker:(NSDictionary *)poiinfo view:(UIView *)pinView;
 
-
+/**
+ Intripper Secure API call
+ 
+@param apiname name of api
+@param andParameter api parameter
+@param result api result
+*/
+-(void)intripperApi:(NSString *)apiname andParameter:(NSDictionary *)apiparam result:(void (^)(NSArray *apiresponse, NSError *error))response;
 
 -(NSString *)IAAPIapikey;
 -(NSString *)IAAPIapiSecret;
