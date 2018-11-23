@@ -92,6 +92,25 @@ typedef NS_ENUM(NSInteger,DestinationDirection) {
      Destination_Front,
 };
 
+
+/**
+ Floor Change by event
+ */
+typedef NS_ENUM(NSInteger,FloorChangeReason) {
+    /**
+     *  by user
+     */
+    changedby_Manual,
+    /**
+     *  by location provider
+     */
+    changedby_LocationProvider,
+    /**
+     *  by app internal
+     */
+    changedby_Programmatic,
+};
+
 /**
  *  Description
  *
@@ -242,12 +261,13 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  */
 -(void)intripper:(id)mapView endNavigation:(BOOL)navigationState ;
 
+
 /**
- *  Called when the user arrives at the destination in navigation mode.
- *
- *  @param mapView The mapview
- *  @param navigationState YES if user is arriving near the destination.
-*  @param destinationDirection direction of destination.
+ Called when the user arrives at the destination in navigation mode.
+
+ @param mapView The mapview
+ @param navigationState YES if user is arriving near the destination.
+ @param atDirection direction of destination.
  */
 -(void)intripper:(id)mapView endNavigation:(BOOL)navigationState destinationDirection:(DestinationDirection) atDirection;
 
@@ -478,6 +498,16 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  */
 - (void)intripper:(id)mapView didChangeMapMode:(MapViewMode)previewMode;
 
+
+/**
+ Apply jump logic and handle jump supress event
+
+ @param mapView UI Map
+ @param jumppoint location point for false reading
+ @param jumpdistance distance of false reading
+ */
+- (void)intripper:(id)mapView jumpsupress:(CGIndoorMapPoint)jumppoint atdistance:(double)jumpdistance;
+
 @end
 /**
  *  This is the main class of InTripper SDK for IOS and is the entry point for all the methods related to maps.
@@ -533,10 +563,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  Controls whether the mapview's inbuilt floor selector is to be shown. Set NO if the application wants to create custom floor selector.
  */
 @property (nonatomic,readwrite) BOOL enableFloorSelector;
-/**
- *  Is User OnSite or not
- */
-@property (nonatomic,readwrite) BOOL onSite;
+
 
 /**
  *  Show/Hide map provider logo on map, Default show
@@ -707,6 +734,22 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @param floor The floor to be set.
  */
 - (void) changeFloor:(int) floor;
+
+/**
+ Called this method if floor changed by location provider
+
+ @param floor new Floor number
+ */
+- (void) changeFloorByLocationProvider:(int) floor;
+
+/**
+ Called this method if floor changed by event
+
+ @param floor new Floor number
+ @param byEvent by event
+ */
+- (void) changeFloor:(int) floor reason:(FloorChangeReason)byEvent;
+
 /**
  *  Removes current markers from the mapview.
  */
@@ -923,13 +966,28 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 
 /**
  Intripper Secure API call
- 
-@param apiname name of api
-@param andParameter api parameter
-@param result api result
-*/
+
+ @param apiname name of api
+ @param apiparam api parameter
+ @param response result
+ */
 -(void)intripperApi:(NSString *)apiname andParameter:(NSDictionary *)apiparam result:(void (^)(NSArray *apiresponse, NSError *error))response;
 
--(NSString *)IAAPIapikey;
--(NSString *)IAAPIapiSecret;
+
+/**
+ Geting venue information
+
+ @param VenueID VenueID
+ @param response venueinfo
+ */
++(void)getVenueInfo:(NSString *)VenueID result:(void (^)(IntripperMap *venueinfo, NSError *error))response;
+
+
+/**
+ Return nearest enterance point for POI While navigation
+ @param destination search point
+ @param start start Navigation Point
+ @return nearest Enterance of poi
+ */
+-(CGIndoorMapPoint)calculateNearestEnterance:(CGIndoorMapPoint)destination from:(CGIndoorMapPoint)start;
 @end
