@@ -69,8 +69,8 @@ typedef NS_ENUM(NSInteger,FloorConntectedBy) {
      * Staircase
      */
     FloorConntectedBy_Staircase,
-    
-    
+
+
 };
 
 
@@ -136,7 +136,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 
 /**
  Called after map loaded on screen
- 
+
  @param sender  the mapview that passed
  @param isLoaded true/false always return true
  */
@@ -197,6 +197,16 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @param routeInfo The area/section data
  */
 -(void)intripper:(id)mapView instruction:(NSUInteger)pathIndex pathInfo:(NSDictionary *)routeInfo;
+
+/**
+  Called when user wants turn by turn instructions.
+
+ @param mapView The mapview where the route for turn by turn is drawn.
+ @param pathIndex The index of the area/section.
+ @param routeInfo The area/section data
+ @param isByUser Action trigger by User or internal.
+ */
+-(void)intripper:(id)mapView instruction:(NSUInteger)pathIndex pathInfo:(NSDictionary *)routeInfo triggerByUserInteaction:(BOOL)isByUser;
 /**
  *  Called when a user is in navigation mode and moves away from the drawn route.
  *
@@ -222,6 +232,16 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @param level   The level of the floor change.
  */
 -(void)intripper:(id)mapView onFloorChange:(int)level;
+
+
+/**
+ Called when change in floor is detected.
+
+ @param mapView The mapview that caused the event to trigger.
+ @param level The level of the floor change
+ @param isByUser detect trigger by user or not
+ */
+-(void)intripper:(id)mapView onFloorChange:(int)level triggerByUserInteaction:(BOOL)isByUser;
 /**
  *  Called after a double tap gesture is detected on floor selector.
  *
@@ -257,9 +277,18 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  Called when the user arrives at the destination in navigation mode.
  *
  *  @param mapView The mapview
- *  @param navigationState YES if user is arriving near the destination.
+ *  @param navigationend YES if user is arriving near the destination.
  */
--(void)intripper:(id)mapView endNavigation:(BOOL)navigationState ;
+-(void)intripper:(id)mapView endNavigation:(BOOL)navigationend;
+
+
+/**
+ Called when user explicit exit navigation
+
+ @param mapView The mapview
+ @param navigationState True when user exit navigation
+ */
+-(void)intripper:(id)mapView navigationExited:(BOOL)navigationState;
 
 
 /**
@@ -423,7 +452,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 
 /**
  Anchor point where marker render default(.0,.5)
- 
+
  @param mapview The mapview where level marker render
  @param refAnchor SDK marker point
  @return Changed marker point
@@ -451,7 +480,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 -(CGPoint)intripper:(id)mapview BuildingChangedMarkerAnchor:(CGPoint)refAnchor __deprecated_msg("use intripper: buildingChangedMarkerAnchor: instead.");
 /**
  Customize building anchor
- 
+
  @param mapview The mapview where level marker render
  @param refAnchor anchore point set by sdk
  @return new Anchor point
@@ -686,6 +715,12 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @param cutAtEnterance BOOL flag
  */
 -(void)findRoute:(CGIndoorMapPoint)startPoint destination:(CGIndoorMapPoint)endPoint uptoDoor:(BOOL)cutAtEnterance;
+
+/**
+ *  Start the navigation when user's navigation mode is NavigationMode_TurnByTurn
+ */
+-(void)startNavigation;
+
 /**
  *  Ends the navigation when user's navigation mode is NavigationMode_TurnByTurn
  */
@@ -990,4 +1025,13 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @return nearest Enterance of poi
  */
 -(CGIndoorMapPoint)calculateNearestEnterance:(CGIndoorMapPoint)destination from:(CGIndoorMapPoint)start;
+
+/**
+ Display path for given group index
+
+ @param pathGroupIndex group index
+ */
+-(void)showPathForGroupIndex:(NSString *)pathGroupIndex;
+
+
 @end
