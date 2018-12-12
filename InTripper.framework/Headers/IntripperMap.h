@@ -69,8 +69,6 @@ typedef NS_ENUM(NSInteger,FloorConntectedBy) {
      * Staircase
      */
     FloorConntectedBy_Staircase,
-
-
 };
 
 
