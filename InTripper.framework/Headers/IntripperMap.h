@@ -205,6 +205,17 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @param isByUser Action trigger by User or internal.
  */
 -(void)intripper:(id)mapView instruction:(NSUInteger)pathIndex pathInfo:(NSDictionary *)routeInfo triggerByUserInteaction:(BOOL)isByUser;
+
+
+/**
+ Group index change with path
+
+ @param mapView the view
+ @param newGroupIndex new group index
+ @param oldGroupIndex old group index
+ */
+-(void)intripper:(id)mapView groupIndexChanged:(NSString *)newGroupIndex from:(NSString *)oldGroupIndex;
+
 /**
  *  Called when a user is in navigation mode and moves away from the drawn route.
  *
