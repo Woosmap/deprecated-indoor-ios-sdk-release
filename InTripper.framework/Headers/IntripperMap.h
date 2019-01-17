@@ -500,13 +500,6 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  Called when poi searched on map
 
  @param mapView The mapview where poi marker render
- @param poiinfo Detail of poi
- */
-
-/**
- Called when poi searched on map
-
- @param mapView The mapview where poi marker render
  @param poiinfo Detail of POI
  @param error return error when poi not found else nil
  */
@@ -545,6 +538,14 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @param jumpdistance distance of false reading
  */
 - (void)intripper:(id)mapView jumpsupress:(CGIndoorMapPoint)jumppoint atdistance:(double)jumpdistance;
+
+/**
+ Area info for search poi
+
+ @param mapview map view
+ @param poiinfo more information about poi defined
+ */
+-(void)intripper:(id)mapview onSearchedPOISelected:(NSDictionary *)poiinfo;
 
 @end
 /**
@@ -628,6 +629,9 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  * HighlightStrokeWidth for lable render on map
  */
 @property (nonatomic,readwrite) float labelHighlightStrokeWidth;
+
+
+@property (nonatomic,assign) UIEdgeInsets logoPadding;
 
 /**
  *  Sets the navigation mode.
@@ -1042,5 +1046,16 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  */
 -(void)showPathForGroupIndex:(NSString *)pathGroupIndex;
 
+/**
+ Display poi search result on map
+ 
+ @param searchresult List of poiids
+ */
+-(void)showSearchedPOIsOnMap:(NSArray *)searchresult completion:(void (^)(NSArray *searchResult, NSError *error))result;
+
+/**
+ Removing search result from map
+ */
+-(void)clearSearchedPOIs;
 
 @end
