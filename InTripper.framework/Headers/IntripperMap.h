@@ -558,6 +558,12 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  Sets the VenueID for the map.
  */
 @property (nonatomic,retain) NSString *VenueID;
+
+/**
+ Set Venue code for the map
+ */
+@property (nonatomic,retain) NSString *VenueCode;
+
 /**
  *  Sets the default floor to be shown when the map loads.
  */
