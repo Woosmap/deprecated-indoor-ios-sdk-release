@@ -140,6 +140,15 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  */
 -(void)intripper:(id)sender onLoaded:(BOOL)isLoaded;
 
+
+/**
+ Called when something wrong while fetching venue information
+
+ @param sender the mapview that passed
+ @param error error detail
+ */
+-(void)intripper:(id)sender onVenueError:(NSException *)error;
+
 /**
  *  Called after a long-press gesture at a particular coordinate.
  *
@@ -568,6 +577,13 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  Sets the default floor to be shown when the map loads.
  */
 @property (nonatomic,readwrite) int floorNumber;
+
+
+/**
+ Default floor for map
+ */
+@property (nonatomic,readonly) int defaultFloorNumber;
+
 /**
  * Floor Number Index
  */
