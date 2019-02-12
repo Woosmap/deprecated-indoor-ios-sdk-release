@@ -715,7 +715,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *
  *  @return Returns a dictionary of the tapped area.
  */
--(NSDictionary *) getTappedAreaInfo :(CLLocation *)location onFloor:(int)level;
+-(nullable NSDictionary *) getTappedAreaInfo :(CLLocation *)location onFloor:(int)level;
 
 /**
  *  Returns the information of the tapped area on the map.
@@ -726,7 +726,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *
  *  @return Returns a dictionary of the tapped area.
  */
--(NSDictionary *) getTappedAreaInfo :(CLLocation *)location onFloor:(int)level skipNonBusinessArea:(BOOL) shouldSkip;
+-(nullable NSDictionary *) getTappedAreaInfo :(CLLocation *)location onFloor:(int)level skipNonBusinessArea:(BOOL) shouldSkip;
 
 /**
  *  Centers the blue dot in the map view.
