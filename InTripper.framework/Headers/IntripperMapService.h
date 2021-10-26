@@ -2,8 +2,8 @@
   IntripperMapService.h
   Intripper
 
-  Created by Sanginfo on 20/01/16.
-  Copyright © 2017-18 InTripper. All rights reserved.
+  Created by InTripper on 20/01/19.
+  Copyright © 2020 InTripper. All rights reserved.
 */
 
 #import <Foundation/Foundation.h>
@@ -67,4 +67,6 @@
 -(NSString *)intripperApiKey;
 
 -(NSString *)endpointURL;
+
+-(NSString *)IntripperURL;
 @end

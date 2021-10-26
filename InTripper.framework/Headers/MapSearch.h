@@ -2,8 +2,8 @@
   MapSearch.h
   Intripper
 
-  Created by Sanginfo on 03/02/16.
-  Copyright © 2017-18 InTripper. All rights reserved.
+  Created by InTripper on 03/02/19.
+  Copyright © 2020 InTripper. All rights reserved.
 */
 
 #import <Foundation/Foundation.h>
@@ -49,7 +49,12 @@ typedef NS_ENUM(NSInteger, SearchType) {
  */
 @interface MapSearch : NSObject
  @property(nonatomic,weak) id <MapSearchDelegate> mapSearchDelegate;
- 
+
+/**
+ *  This use for filter search result using group tag.
+ */
+@property (nonatomic,strong) NSString *filterTag;
+
 /**
  *  Initializes search API's
  *

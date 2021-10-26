@@ -2,8 +2,8 @@
 *  @header IntripperMap.h
 *  Intripper
 *
-*  Created by Intripper on 20/01/16.
-*  Copyright © 2017-18 InTripper. All rights reserved.
+*  Created by Intripper on 20/01/19.
+*  Copyright © 2020 InTripper. All rights reserved.
 */
 
 #import <UIKit/UIKit.h>
@@ -13,6 +13,8 @@
 #import "TrackingMarker.h"
 #import "TrackingAreaMarker.h"
 #import <GoogleMaps/GoogleMaps.h>
+#import "Stopover.h"
+
 /**
  *  Navigation Modes
  */
@@ -116,7 +118,7 @@ typedef NS_ENUM(NSInteger,FloorChangeReason) {
  *
  *  @return return value description
  */
-typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
+typedef PathFormatter* _Nullable (^PathFormatterBlock)(PathFormatter * _Nullable formatter);
 /**
  *  Delegates for the events on Intripper object.
  */
@@ -147,7 +149,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @param sender the mapview that passed
  @param error error detail
  */
--(void)intripper:(nonnull id)sender onVenueError:(NSException *)error;
+-(void)intripper:(nonnull id)sender onVenueError:(nonnull NSError *)error;
 
 /**
  *  Called after a long-press gesture at a particular coordinate.
@@ -187,7 +189,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @param mapView   The mapview where the route will be drawn.
  *  @param routeList An array of geojson objects
  */
--(void)intripper:(nonnull id)mapView route:(NSArray *)routeList;
+-(void)intripper:(nonnull id)mapView route:(nonnull NSArray *)routeList;
 
 /**
  Called when search route failed to get route
@@ -195,7 +197,16 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @param mapView The mapview where the route will be drawn.
  @param routeList empty route list
  */
--(void)intripper:(nonnull id)mapView noRoute:(NSArray *)routeList;
+-(void)intripper:(nonnull id)mapView noRoute:(nonnull NSArray *)routeList;
+
+/**
+Called when search route function failed
+
+@param mapView The mapview where the route will be drawn.
+@param errorInfo Detail error description
+*/
+-(void)intripper:(nonnull id)mapView onNavigationError:(nonnull NSError *)errorInfo;
+
 /**
  *  Called when user wants turn by turn instructions.
  *
@@ -554,11 +565,19 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  @param mapview map view
  @param poiinfo more information about poi defined
  */
--(void)intripper:(nonnull id)mapview onSearchedPOISelected:(NSDictionary *)poiinfo;
+-(void)intripper:(nonnull id)mapview onSearchedPOISelected:(nullable NSDictionary *)poiinfo;
+
+/**
+ called if user position changed while navigation node
+ 
+ @param mapview map view
+ @param navigationStatusUpdated more information Navigation  time remaining in seconds, Distance to be covered in meters, walking speed
+ */
+-(void) intripper:(nonnull id)mapview onNavigationStatusUpdated:(nonnull NSDictionary *)navigationStatusUpdated;
 
 @end
 /**
- *  This is the main class of InTripper SDK for IOS and is the entry point for all the methods related to maps.
+ * This is the main class of InTripper SDK for IOS and is the entry point for all the methods related to maps.
  */
 @interface IntripperMap : UIViewController{
 }
@@ -567,6 +586,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  Sets the VenueID for the map.
  */
 @property (nonatomic,retain) NSString *VenueID;
+
 
 /**
  Set Venue code for the map
@@ -615,11 +635,11 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 /**
  *  IntripperMapDelegate delegate
  */
-@property(nonatomic,weak) id <IntripperMapDelegate> mapdelegate;
+@property(weak) id <IntripperMapDelegate> mapdelegate;
 /**
  *  S Navigation  path
  */
-@property (copy) PathFormatterBlock pathOptions;
+@property (copy) PathFormatterBlock _Nullable pathOptions;
 /**
  *  Controls whether the mapview's inbuilt floor selector is to be shown. Set NO if the application wants to create custom floor selector.
  */
@@ -635,7 +655,7 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
 /**
  Text color of label to render on map
  */
-@property(nonatomic,retain) UIColor *textColor;
+@property(nonatomic,retain) UIColor * _Nullable textColor;
 
 /**
  Rotate map and keep user location pointing to upwoard only Default=false
@@ -750,6 +770,24 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @param cutAtEnterance BOOL flag
  */
 -(void)findRoute:(CGIndoorMapPoint)startPoint destination:(CGIndoorMapPoint)endPoint uptoDoor:(BOOL)cutAtEnterance;
+
+/**
+*  Finds the path from the source to the destinations. It has an option to end the path at the entrance or inside the store. This choice is useful when a path needs to be ended at the entrance (in case of stores) or inside (in case of a POI located inside the store)
+*
+*  @param startPoint     Source Coordinates
+*  @param endPoint       Destination Coordinates
+*  @param endAt             Location where path end at
+*/
+-(void)findRoute:(CGIndoorMapPoint)startPoint destinations:(NSArray<Stopover *> *_Nonnull)endPoints endAt:(CGIndoorMapPoint)endPoint;
+
+/**
+*  Finds the path from the source to the destinations. It has an option to end the path at the entrance or inside the store. This choice is useful when a path needs to be ended at the entrance (in case of stores) or inside (in case of a POI located inside the store)
+*
+*  @param startPoint     Source Coordinates
+*  @param endPoint       Destination Coordinates
+*/
+-(void)findRoute:(CGIndoorMapPoint)startPoint destinations:(NSArray<Stopover *> *_Nonnull)endPoints;
+
 
 /**
  *  Start the navigation when user's navigation mode is NavigationMode_TurnByTurn
@@ -1093,5 +1131,33 @@ typedef PathFormatter* (^PathFormatterBlock)(PathFormatter *formatter);
  *  @return The API secret for the indoor positioning services.
  */
 -(nonnull NSString *)IndoorServiceApiSecret;
+-(CGIndoorMapPoint)toExtendedCoordinate:(CGIndoorMapPoint)geoSystem;
+-(CGIndoorMapPoint)toGEOCoordinate:(CGIndoorMapPoint)extendedSystem;
 
+/**
+ * Cleanup IndoorMap and GoogleMap
+ */
+-(void)stopRenderingMap;
+
+    /**
+     Check Location inside indoor venue
+
+     @param latLng location to check
+     @param result check is location with in boundry of indoor venue
+     */
+    -(void)isInsideVenue:(CLLocationCoordinate2D) latLng completion:(void (^_Nullable)(BOOL insideVenue, NSError * _Nullable error))result;
+
+
+/// Compute sorted list of multiple stops
+/// @param startPoint User location
+/// @param endPoints List of Stops
+/// @param endAt Location where path end at
+/// @param result  return sorted list of stops or error if any
+-(void)sortStopovers:(CGIndoorMapPoint)startPoint destinations:(NSArray<Stopover *> *_Nonnull)endPoints endAt:(CGIndoorMapPoint)endPoint completion:(void (^_Nullable)(NSArray<Stopover *> * _Nullable sortedList, NSError * _Nullable error))result;
+
+/// Compute sorted list of multiple stops
+/// @param startPoint User location
+/// @param endPoints List of Stops
+/// @param result  return sorted list of stops or error if any
+-(void)sortStopovers:(CGIndoorMapPoint)startPoint destinations:(NSArray<Stopover *> *_Nonnull)endPoints completion:(void (^_Nullable)(NSArray<Stopover *> * _Nullable sortedList, NSError * _Nullable error))result;
 @end
